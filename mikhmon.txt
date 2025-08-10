@@ -1,0 +1,109 @@
+<?php
+// ====== BAGIAN LOGIC PHP ======
+
+// Format masa aktif
+if(substr($validity,-1) == "d"){
+    $validity = "<br>MASA AKTIF : ".substr($validity,0,-1)." HARI";
+} elseif(substr($validity,-1) == "h"){
+    $validity = "MASA AKTIF : ".substr($validity,0,-1)." Jam";
+}
+
+// Format durasi
+if(substr($timelimit,-1) == "d" && strlen($timelimit) > 3){
+    $timelimit = "Durasi:".((substr($timelimit,0,-1)*7) + substr($timelimit, 2,1))." HARI";
+} elseif(substr($timelimit,-1) == "d"){
+    $timelimit = "Durasi:".substr($timelimit,0,-1)." HARI";
+} elseif(substr($timelimit,-1) == "h"){
+    $timelimit = "Durasi:".substr($timelimit,0,-1)." Jam";
+} elseif(substr($timelimit,-1) == "w"){
+    $timelimit = "Durasi:".(substr($timelimit,0,-1)*7)." HARI";
+}
+
+// Tentukan warna berdasarkan harga
+if($getsprice == "3000"){ $color = "#666"; }
+elseif($getsprice == "1000"){ $color = "#FF1493"; }
+elseif($getsprice == "2000"){ $color = "#8B008B"; }
+elseif($getsprice == "5000"){ $color = "#FF4500"; }
+elseif($getsprice == "10000"){ $color = "#E65100"; }
+elseif($getsprice == "15000"){ $color = "#228B22"; }
+elseif($getsprice == "20000"){ $color = "#008000"; }
+elseif($getsprice == "30000"){ $color = "#FF00FF"; }
+elseif($getsprice == "60000"){ $color = "#E60C00"; }
+elseif($getsprice == "70000"){ $color = "#FF0000"; }
+else { $color = "#BA68C8"; }
+?>
+
+<!-- ====== BAGIAN CSS ====== -->
+<style>
+.qrcode {
+    height: 60px;
+    width: 60px;
+}
+</style>
+
+<!-- ====== BAGIAN HTML VOUCHER ====== -->
+<table style="display:inline-block; border-collapse:collapse; border:1px solid #000; margin:2px; width:190px; overflow:hidden; position:relative; padding:0;">
+  <tbody>
+    <tr>
+      <td style="color:#666;" valign="top">
+        <table style="width:100%;">
+          <tbody>
+            <tr>
+              <td style="width:75px">
+                <div style="position:relative; z-index:-1; padding:0; float:left;">
+                  <div style="position:absolute; top:0; margin-top:-100px; width:0; height:0; border-top:230px solid transparent; border-left:50px solid transparent; border-right:140px solid #DCDCDC;"></div>
+                </div>
+                <img style="margin:5px 0 0 5px;" width="85" height="20" src="<?= $logo ?>" alt="logo">
+              </td>
+              <td style="width:115px">
+                <div style="text-align:right; font-weight:bold; font-family:Tahoma; font-size:20px; padding-left:17px; color:<?= $color ?>">
+                  <small style="font-size:10px; margin-left:-17px; position:absolute;"><?= explode(" ", $price)[0] ?></small>
+                  <?= explode(" ", $price)[1] ?>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="color:#666; border-collapse:collapse;" valign="top">
+        <table style="width:100%; border-collapse:collapse;">
+          <tbody>
+            <tr>
+              <td style="width:95px" valign="top">
+                <?php if($v_opsi != 'up'){ ?>
+                  <div style="padding:0; border-bottom:1px solid <?= $color ?>; text-align:center; font-weight:bold; font-size:10px;">VOUCHER</div>
+                  <div style="padding:0; border-bottom:1px solid <?= $color ?>; text-align:center; font-weight:bold; font-size:14px; color:#000;"><?= $username ?></div>
+                <?php } ?>
+
+                <div style="text-align:center; color:#111; font-size:7px; font-weight:bold; padding:2.5px;">
+                  Hubungkan ke wifi MKS<br>
+                  Buka browser ketik: mks.net
+                </div>
+              </td>
+
+              <td style="width:100px; text-align:right;">
+                <div style="font-size:7px; font-weight:bold; color:#000; padding:0 2.5px;">
+                  <?= $validity ?><br>
+                  <?= $timelimit ?><br>
+                  <?= $datalimit ?>
+                </div>
+                <div style="float:right; padding:1px; text-align:right; width:70%; margin:0 5px -20px 0;">
+                  <?= $qrcode ?>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="2" style="background:<?= $color ?>; color:#fff; font-size:9px; font-weight:bold; padding:2.5px;">
+                CS: <b>0822 4072 4572</b>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
